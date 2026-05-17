@@ -8,8 +8,9 @@ package flowtest
 // Convention: C-14 (file purpose declaration).
 
 import (
+	"cmp"
 	"fmt"
-	"sort"
+	"slices"
 	"strings"
 
 	"github.com/septagon-oss/pk-shared/pkg/flowdef"
@@ -95,12 +96,12 @@ func ValidateCoverage(requirements []Requirement, flows []flowdef.Definition) Re
 			report.Missing = append(report.Missing, id)
 		}
 	}
-	sort.Strings(report.Missing)
-	sort.SliceStable(report.Diagnostics, func(i, j int) bool {
-		if report.Diagnostics[i].ID == report.Diagnostics[j].ID {
-			return report.Diagnostics[i].Message < report.Diagnostics[j].Message
+	slices.Sort(report.Missing)
+	slices.SortStableFunc(report.Diagnostics, func(a, b Diagnostic) int {
+		if a.ID == b.ID {
+			return cmp.Compare(a.Message, b.Message)
 		}
-		return report.Diagnostics[i].ID < report.Diagnostics[j].ID
+		return cmp.Compare(a.ID, b.ID)
 	})
 	return report
 }

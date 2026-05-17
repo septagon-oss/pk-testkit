@@ -174,5 +174,5 @@ func expectedStatuses(statuses []int) []int {
 	if len(statuses) == 0 {
 		return []int{200, 201, 202, 203, 204, 205, 206}
 	}
-	return append([]int(nil), statuses...)
+	return slices.Clone(statuses)
 }

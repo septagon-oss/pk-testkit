@@ -8,9 +8,10 @@ package conformance
 // Convention: C-14 (file purpose declaration).
 
 import (
+	"cmp"
 	"context"
 	"fmt"
-	"sort"
+	"slices"
 	"strings"
 	"time"
 )
@@ -94,8 +95,8 @@ func NewSuite(checks ...Check) (*Suite, error) {
 		seen[c.ID] = struct{}{}
 		normalized = append(normalized, c)
 	}
-	sort.SliceStable(normalized, func(i, j int) bool {
-		return normalized[i].ID < normalized[j].ID
+	slices.SortStableFunc(normalized, func(a, b Check) int {
+		return cmp.Compare(a.ID, b.ID)
 	})
 	return &Suite{checks: normalized}, nil
 }
