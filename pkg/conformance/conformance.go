@@ -114,6 +114,7 @@ func (s *Suite) Run(ctx context.Context) Report {
 			Status:  StatusFail,
 			Message: "conformance suite has no checks",
 		})
+		report.CompletedAt = time.Now().UTC()
 		return report
 	}
 

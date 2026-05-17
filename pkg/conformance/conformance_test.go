@@ -40,6 +40,12 @@ func TestSuiteFailsWhenEmpty(t *testing.T) {
 	if report.Status != StatusFail {
 		t.Fatalf("report.Status = %q, want %q", report.Status, StatusFail)
 	}
+	if report.StartedAt.IsZero() || report.CompletedAt.IsZero() {
+		t.Fatalf("empty suite should still record report timestamps: %#v", report)
+	}
+	if report.CompletedAt.Before(report.StartedAt) {
+		t.Fatalf("CompletedAt %s before StartedAt %s", report.CompletedAt, report.StartedAt)
+	}
 }
 
 func TestSuiteAcceptsNilContext(t *testing.T) {
