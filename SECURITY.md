@@ -1,6 +1,6 @@
 # Security
 
-Report security issues privately to `hello@septagon.dev`.
+Please report security issues privately to `hello@septagon.dev`.
 
-Conformance checks should fail closed when a required requirement or protected
-flow has no executable coverage.
+Do not open public issues for vulnerabilities, credential exposure, or bypasses
+in tenant isolation, authentication, authorization, audit, or module loading.

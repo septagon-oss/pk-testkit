@@ -20,8 +20,11 @@ import (
 type Status string
 
 const (
+	// StatusPass marks a check that satisfied its requirement.
 	StatusPass Status = "pass"
+	// StatusFail marks a check that did not satisfy its requirement.
 	StatusFail Status = "fail"
+	// StatusSkip marks a check that was intentionally not evaluated.
 	StatusSkip Status = "skip"
 )
 
