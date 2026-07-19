@@ -2,8 +2,9 @@ package apitest
 
 // runner_test.go validates API flow execution against in-process HTTP handlers.
 //
-// ADR: ADR-0029 (file purpose declaration).
-// Convention: C-14 (every Go file declares its purpose).
+// Validates: REQ-015.
+// Per: ADR-0029 (file purpose declaration).
+// Discipline: C-14.
 
 import (
 	"context"
@@ -86,5 +87,45 @@ func TestRunnerAcceptsNilContext(t *testing.T) {
 	})
 	if !result.Passed {
 		t.Fatalf("flow should pass: %#v", result)
+	}
+}
+
+func TestRunnerStopsWhenRequestBuilderCancelsContext(t *testing.T) {
+	t.Parallel()
+
+	ctx, cancel := context.WithCancel(context.Background())
+	handlerCalled := false
+	runner, err := NewRunner(
+		http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+			handlerCalled = true
+			w.WriteHeader(http.StatusNoContent)
+		}),
+		WithRequestBuilder(func(ctx context.Context, definition flowdef.Definition, step flowdef.APIStep) (*http.Request, error) {
+			cancel()
+			return DefaultRequestBuilder(ctx, definition, step)
+		}),
+	)
+	if err != nil {
+		t.Fatalf("NewRunner() error = %v", err)
+	}
+
+	result := runner.Run(ctx, flowdef.Definition{
+		ID:   "cancel-during-build",
+		Name: "Cancel During Build",
+		Channels: flowdef.Channels{API: &flowdef.APIChannel{Steps: []flowdef.APIStep{{
+			OperationID:     "cancel",
+			Method:          "GET",
+			Path:            "/cancel",
+			SuccessStatuses: []int{http.StatusNoContent},
+		}}}},
+	})
+	if result.Passed {
+		t.Fatalf("flow should fail after cancellation: %#v", result)
+	}
+	if handlerCalled {
+		t.Fatal("handler ran after request builder canceled the context")
+	}
+	if len(result.Steps) != 1 || result.Steps[0].Message != context.Canceled.Error() {
+		t.Fatalf("canceled step = %#v", result.Steps)
 	}
 }

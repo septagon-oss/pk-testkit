@@ -5,8 +5,9 @@ package apitest
 // network clients and environment orchestration so the same flow definitions can
 // run in unit tests, local apps, or downstream E2E harnesses.
 //
-// ADR: ADR-0029 (file purpose declaration).
-// Convention: C-14 (file purpose declaration).
+// Implements: REQ-015.
+// Per: ADR-0029 (file purpose declaration).
+// Discipline: C-14.
 
 import (
 	"context"
@@ -127,6 +128,11 @@ func (r *Runner) runStep(ctx context.Context, definition flowdef.Definition, ste
 	}
 	req, err := r.builder(ctx, definition, step)
 	if err != nil {
+		result.Message = err.Error()
+		result.Duration = time.Since(start)
+		return result
+	}
+	if err := ctx.Err(); err != nil {
 		result.Message = err.Error()
 		result.Duration = time.Since(start)
 		return result
