@@ -1,6 +1,9 @@
 // Package conformance runs deterministic platform conformance checks.
 package conformance
 
+// Implements: REQ-015.
+// Per: ADR-0021.
+// Discipline: C-14.
 // conformance.go owns the adapter-neutral conformance check contract for OSS
 // and downstream PlatformKit distributions.
 //

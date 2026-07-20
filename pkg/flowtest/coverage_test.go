@@ -1,5 +1,8 @@
 package flowtest
 
+// Validates: REQ-015.
+// Per: ADR-0021.
+// Discipline: C-14.
 // coverage_test.go validates requirement-to-flow coverage diagnostics.
 //
 // ADR: ADR-0029 (file purpose declaration).

@@ -1,5 +1,8 @@
 package conformance
 
+// Validates: REQ-015.
+// Per: ADR-0021.
+// Discipline: C-14.
 // conformance_test.go validates deterministic conformance check execution and
 // validation.
 //

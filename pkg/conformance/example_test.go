@@ -1,5 +1,8 @@
 package conformance_test
 
+// Validates: REQ-015.
+// Per: ADR-0021.
+// Discipline: C-14.
 // example_test.go provides runnable godoc examples for the conformance package.
 //
 // ADR: ADR-0029 (file purpose declaration).

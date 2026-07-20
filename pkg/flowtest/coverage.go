@@ -1,6 +1,9 @@
 // Package flowtest validates requirement-to-flow coverage.
 package flowtest
 
+// Implements: REQ-015.
+// Per: ADR-0021.
+// Discipline: C-14.
 // coverage.go owns adapter-neutral flow coverage validation over pk-shared
 // flow definitions.
 //
