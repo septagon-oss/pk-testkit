@@ -1,5 +1,9 @@
 # pk-testkit
 
+> Part of [PlatformKit](https://github.com/septagon-oss/platformkit) — the open-source Go backend for multi-tenant SaaS.
+
+**Depends on.** `pk-shared` only. Nothing else in PlatformKit.
+
 [![Go Reference](https://pkg.go.dev/badge/github.com/septagon-oss/pk-testkit.svg)](https://pkg.go.dev/github.com/septagon-oss/pk-testkit)
 [![CI](https://github.com/septagon-oss/pk-testkit/actions/workflows/go.yml/badge.svg)](https://github.com/septagon-oss/pk-testkit/actions/workflows/go.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
